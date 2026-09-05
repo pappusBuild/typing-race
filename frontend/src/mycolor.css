@@ -1,0 +1,43 @@
+:root {
+    /* app color */
+    --app-background: #210535;
+
+    /* divider color */
+    --divider-secondary-color: #7E3EB1;
+    --divider-tertiary: #9262B9;
+    --divider-primary-color: #341E55;
+
+    /* game color */
+    --game-secondary: #A686BE;
+    --game-primary: #5B5958;
+
+    /* text color */
+    --text-primary: #FFD073;
+    --text-secondary: #FFC145;
+    --text-tertiary: #00FF5E;
+
+    /* avatar color */
+    --avatar-border: #FFAC00;
+
+    /* button color */
+    --button-solo-secondary: #FF8C00;
+    --button-solo-primary: #FF6E00;
+    --button-matches-primary: #9500FF;
+    --button-game-hover: #AA65FF;
+
+    /* passive color */
+    --passive-color: #A393B5;
+
+    /* card color */
+    --card-background-secondary: #12141C;
+    --card-background-primary: #0A0B0E;
+    --card-background-quarter: #38184A;
+    --card-background-tertiary: #160C2B;
+
+    /* base color */
+    --base-white: #FFFFFF;
+    --base-black: #000000;
+
+    /* secondary color */
+    --secondary-white: #DFDFDF;
+}
