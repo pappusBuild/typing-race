@@ -22,4 +22,4 @@ dist-ssr/
 *.local
 
 # Storybook
-storybook-static
+storybook-statics

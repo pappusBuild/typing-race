@@ -2,8 +2,8 @@ import * as React from "react"
 import logout from "@/assets/icons/logout.svg"
 
 import { Avatar } from "@/components/ui/avatar/avatar"
-import { DropdownItem } from "@/components/ui/dropdown-item"
-import { DropdownList } from "@/components/ui/dropdown-list"
+import { DropdownItem } from "@/components/user/profile-dropdown/dropdown-item"
+import { DropdownList } from "@/components/user/profile-dropdown/dropdown-list"
 import { cn } from "@/lib/utils"
 
 type ProfileDropdownItem = "View Profile" | "Account" | "Setting" | "Logout"
@@ -77,7 +77,7 @@ function ProfileDropdown({ username, role, avatar, className, onItemSelect, ...p
                                 onClick={() => handleItemSelect(item)}
                                 icon={
                                     item === "Logout" ? (
-                                        <img src={logout} alt="Logout" className="size-[23px]" />
+                                        <img src={logout} alt="Logout" className="size-5.75" />
                                     ) : undefined
                                 }
                             >

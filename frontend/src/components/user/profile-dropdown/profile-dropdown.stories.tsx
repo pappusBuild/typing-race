@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { ProfileDropdown } from "./profile-dropdown"
 
@@ -22,22 +22,13 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
     args: {
     username: "Nurul",
-
+    role: "Pro Racer",
     },
     }
-
-
-export const HighLevelPlayer: Story = {
-    args: {
-    username: "SpeedTyper",
-    level: 99,
-    },
-    }
-
 
 export const LongUsername: Story = {
     args: {
     username: "TheFastestKeyboardWarriorEver",
-    level: 25,
+    role: "Kian Santang",
     },
     }
