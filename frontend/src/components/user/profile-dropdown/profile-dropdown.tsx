@@ -1,5 +1,5 @@
 import * as React from "react"
-import { LogOut } from "lucide-react"
+import logout from "@/assets/icons/logout.svg"
 
 import { Avatar } from "@/components/ui/avatar/avatar"
 import { DropdownItem } from "@/components/ui/dropdown-item"
@@ -77,7 +77,7 @@ function ProfileDropdown({ username, role, avatar, className, onItemSelect, ...p
                                 onClick={() => handleItemSelect(item)}
                                 icon={
                                     item === "Logout" ? (
-                                        <LogOut aria-hidden="true" className="size-[23px] text-destructive" />
+                                        <img src={logout} alt="Logout" className="size-[23px]" />
                                     ) : undefined
                                 }
                             >
