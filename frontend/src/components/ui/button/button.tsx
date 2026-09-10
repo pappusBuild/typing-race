@@ -31,7 +31,7 @@ function Button({
             type="button"
             disabled={disabled}
             className={cn(
-                "inline-flex items-center justify-center font-medium transition-all outline-none disabled:pointer-events-none disabled:opacity-50",
+                " inline-flex items-center justify-center font-medium transition-all outline-none disabled:pointer-events-none disabled:opacity-50",
 
                 size === "sm" && "h-10 px-5 text-sm",
                 size === "md" && "h-12 px-6 text-base",

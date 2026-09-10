@@ -30,7 +30,8 @@ function NavbarPublic({
                 <Button
                     variant="game"
                     color="purple"
-                    className="w-64"
+                    className="w-48"
+                    size="sm"
                     onClick={onPlay}
                 >
                     Play Now
@@ -38,7 +39,8 @@ function NavbarPublic({
 
                 <Button
                     variant="outline"
-                    className="w-64"
+                    className="w-48"
+                    size="sm"
                     onClick={onLogin}
                 >
                     Log In

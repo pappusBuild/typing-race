@@ -23,6 +23,7 @@ export const PlaySolo: Story = {
         children: "Play Solo",
         variant: "game",
         color: "orange",
+        size: "sm",
         className: "w-64",
         icon: <img src={play} alt="" className="size-6" />,
     },
@@ -33,6 +34,7 @@ export const PlayNow: Story = {
         children: "Play Now",
         variant: "game",
         color: "purple",
+        size: "sm",
         className: "w-64",
         icon: <img src={play} alt="" className="size-6" />,
     },
@@ -42,6 +44,7 @@ export const Login: Story = {
     args: {
         children: "Log In",
         variant: "primary",
+        size: "sm",
         className: "w-64",
     },
 }
@@ -50,6 +53,7 @@ export const LoginOutline: Story = {
     args: {
         children: "Log In",
         variant: "outline",
+        size: "sm",
         className: "w-64",
     },
 }
@@ -59,6 +63,7 @@ export const Google: Story = {
         children: "Continue with Google",
         variant: "social",
         className: "w-80",
+        size: "sm",
         icon: <img src={google} alt="" className="size-8" />,
     },
 }

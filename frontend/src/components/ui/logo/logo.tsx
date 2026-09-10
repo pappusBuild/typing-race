@@ -19,13 +19,13 @@ function Logo({ className, ...props }: LogoProps) {
             <img
                 src={gass}
                 alt="Gass"
-                className="w-40 group-hover:animate-[logo-blink_1s_ease-in-out_1]"
+                className="w-32 group-hover:animate-[logo-blink_1s_ease-in-out_1]"
             />
 
             <img
                 src={typeLogo}
                 alt="Type"
-                className="w-32 -translate-y-0.5"
+                className="w-24 -translate-y-0.5"
             />
         </div>
     )
