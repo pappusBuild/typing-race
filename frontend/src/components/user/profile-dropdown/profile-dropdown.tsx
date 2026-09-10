@@ -1,7 +1,7 @@
 import * as React from "react"
 import logout from "@/assets/icons/logout.svg"
 
-import { Avatar } from "@/components/ui/avatar/avatar"
+import { Avatar } from "@/components/ui/avatar/avatar/avatar"
 import { DropdownItem } from "@/components/user/profile-dropdown/dropdown-item"
 import { DropdownList } from "@/components/user/profile-dropdown/dropdown-list"
 import { cn } from "@/lib/utils"
