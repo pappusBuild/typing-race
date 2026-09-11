@@ -65,6 +65,7 @@
     --color-card-background-secondary: var(--card-background-secondary);
     --color-card-background-tertiary: var(--card-background-tertiary);
     --color-card-background-quarter: var(--card-background-quarter);
+    --color-card-icon-bg-secondary: var(--card-icon-bg-secondary);
     --color-base-white: var(--base-white);
     --color-base-black: var(--base-black);
     --color-secondary-white: var(--secondary-white);
@@ -139,6 +140,7 @@
     --card-background-primary: #0A0B0E;
     --card-background-quarter: #38184A;
     --card-background-tertiary: #160C2B;
+    --card-icon-bg-secondary: #ffc145;
 
     /* base color */
     --base-white: #FFFFFF;
