@@ -2,12 +2,20 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource/poppins/800.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: 'Geist Variable', sans-serif;
+    --font-geist-mono: "Geist Mono Variable", monospace;
+    --font-poppins: "Poppins", sans-serif;
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -50,6 +58,7 @@
     --color-divider-primary: var(--divider-primary);
     --color-divider-secondary: var(--divider-secondary);
     --color-divider-tertiary: var(--divider-tertiary);
+    --color-outline-tertiary: var(--outline-tertiary);
     --color-game-primary: var(--game-primary);
     --color-game-secondary: var(--game-secondary);
     --color-text-primary: var(--text-primary);
@@ -113,6 +122,7 @@
     --divider-secondary: #7E3EB1;
     --divider-tertiary: #9262B9;
     --divider-primary: #341E55;
+    --outline-tertiary: #00FF5E;
 
     /* game color */
     --game-secondary: #A686BE;

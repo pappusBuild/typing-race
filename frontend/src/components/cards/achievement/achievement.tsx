@@ -21,7 +21,7 @@ function Achievement({ variant = "unlocked", title, description, icon, className
         <div
             {...props}
             className={cn(
-                "flex w-80 flex-col items-start gap-4 rounded-2xl bg-card-background-quarter p-6 outline outline-1 outline-offset-[-1px]",
+                "flex w-80 flex-col items-start gap-4 rounded-2xl bg-card-background-quarter p-6 outline-1 -outline-offset-1",
                 isUnlocked
                     ? "outline-purple-800 shadow-[0px_0px_8px_0px_rgba(126,62,177,0.13)]"
                     : "opacity-50 outline-zinc-900",
