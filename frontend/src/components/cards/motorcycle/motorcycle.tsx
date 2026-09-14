@@ -110,7 +110,7 @@ function Motorcycle({
             {/* Name */}
             <div className="flex w-full flex-col gap-1.5 translate-y-2">
 
-                <h3 className="line-clamp-1 font-archivo text-sm font-normal text-slate-100">
+                <h3 className="line-clamp-1 font-archivo-black text-sm font-bold text-slate-100">
                     {name}
                 </h3>
 
