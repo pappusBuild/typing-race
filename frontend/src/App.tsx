@@ -1,7 +1,7 @@
-import ComponentTest from "./pages/ComponentTest"
+import { HomePage } from "./pages/HomePage/HomePage"
 
 function App() {
-  return <ComponentTest/>
+  return <HomePage/>
 }
 
 export default App
