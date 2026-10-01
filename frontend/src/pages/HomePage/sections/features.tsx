@@ -1,5 +1,4 @@
 import * as React from "react"
-// 1. Impor motion dari library yang sudah terpasang
 import { motion } from "motion/react"
 
 import abcIcon from "@/assets/feature/abc.png"
@@ -37,7 +36,6 @@ const defaultFeatures: FeatureItem[] = [
     },
 ]
 
-// 2. Selaraskan tipe data TypeScript agar menerima properti 'index'
 function FeatureItem({
     icon,
     title,
@@ -46,14 +44,17 @@ function FeatureItem({
 }: FeatureItem & { index: number }) {
     return (
         <motion.div
-            initial={{ opacity: 0, x: 100 }}
+            initial={{ opacity: 0, x: 120 }}
+            
             whileInView={{ opacity: 1, x: 0 }}
+            
             viewport={{ once: true, amount: "some" }}
+            
             transition={{
-                type: "spring", 
-                stiffness: 80, 
-                damping: 15,
-                delay: index * 0.12, // Jeda berurutan 0.2 detik per item
+                type: "tween", 
+                ease: "easeOut",
+                duration: 0.6,        
+                delay: index * 0.05,  
             }}
             className="flex w-full items-center gap-7.5 rounded-[19px]"
         >
@@ -70,11 +71,10 @@ function FeatureItem({
                     {title}
                 </h3>
 
-                <p className="font-poppins text-[18px] font-normal text-text-tertiary">
+                <p className="font-poppins text-[16px] font-normal text-passive-color">
                     {description}
                 </p>
             </div>
-        {/* 3. Menambahkan kembali tag penutup motion.div yang hilang */}
         </motion.div>
     )
 }
@@ -96,7 +96,6 @@ function Features({
                 </div>
 
                 <div className="flex h-full flex-1 flex-col justify-center gap-8 rounded-5 bg-card-background-secondary px-15 py-8">
-                    {/* 4. Menangkap index dari .map dan mengirimkannya ke komponen FeatureItem */}
                     {features.map((feature, index) => (
                         <FeatureItem 
                             key={feature.title} 

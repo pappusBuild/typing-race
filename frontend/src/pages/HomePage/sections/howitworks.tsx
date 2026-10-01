@@ -1,37 +1,51 @@
 import * as React from "react"
-
+// 1. Impor motion dari library pendukung
+import { motion } from "motion/react" 
 import { cn } from "@/lib/utils"
 import askIcon from "@/assets/ask.svg"
 
+import signin from "@/assets/howitworks/signin.svg"
+import choose from "@/assets/howitworks/choose.svg"
+import start from "@/assets/howitworks/start.svg"
+import check from "@/assets/howitworks/check.svg"
 
 type HowItWorksStep = {
     title: string
-    icon?: React.ReactNode
+    bgImage: string
+    variant: "signin" | "choose" | "start" | "check"
+    marginLeftClass: string
 }
-
 
 type HowItWorksProps = React.ComponentProps<"section"> & {
     steps?: HowItWorksStep[]
 }
 
-
-
 const defaultSteps: HowItWorksStep[] = [
     {
         title: "Sign in to get started",
+        bgImage: signin,
+        variant: "signin",
+        marginLeftClass: "ml-[8px]",
     },
     {
         title: "Choose your motor",
+        bgImage: choose,
+        variant: "choose",
+        marginLeftClass: "ml-[128px]",
     },
     {
         title: "Start typing",
+        bgImage: start,
+        variant: "start",
+        marginLeftClass: "ml-[248px]",
     },
     {
         title: "Check your score",
+        bgImage: check,
+        variant: "check",
+        marginLeftClass: "ml-[368px]",
     },
 ]
-
-
 
 function HowItWorks({
     steps = defaultSteps,
@@ -40,109 +54,47 @@ function HowItWorks({
 }: HowItWorksProps) {
 
     return (
-        <section
-            {...props}
-            className={cn(
-                "flex h-210 items-center justify-end overflow-hidden bg-card-background-secondary px-23 py-",
-                className,
-            )}
-        >
-
-            <div
-                className="flex flex-1 flex-col items-center gap-19"
-            >
-
-                {/* Title */}
-
-                <div className="relative flex w-170 items-start justify-start">
-
-                    <h2 className="font-inter text-[48px] font-bold italic leading-10 text-base-white">
-                        How it Works?
+        <section {...props} className={cn("flex min-h-107.5 w-full flex-col items-center justify-center overflow-hidden bg-card-background-secondary px-28 py-12.5", className)}>
+            
+            <div className="flex w-full max-w-304 flex-col items-center gap-19">
+                <div className="relative flex items-baseline justify-center gap-2">
+                    <h2 className="font-inter text-[48px] font-medium italic leading-9.75 text-base-white">
+                        How it Works
                     </h2>
-
-
-                    <img src={ askIcon } className="absolute right-56 -top-14 size-20 ">
-
-                    </img>
-
+                    <img src={askIcon} className="h-19.5 w-19.5 object-contain align-bottom ml-3" alt="Ask Icon" />
                 </div>
 
-
-
-                {/* Steps */}
-
-                <div className="flex w-full flex-col items-start gap-2.5">
-
-                    {steps.map((step) => (
-
-                        <div
-                            key={step.title}
-                            className="
-                                relative
-                                h-14
-                                w-fit
-                            "
+                <div className="flex w-full flex-col justify-start items-start gap-8">
+                    {steps.map((step, index) => (
+                        <motion.div 
+                            key={step.title} 
+                            initial={{ opacity: 0, x: -120 }}
+                            
+                            whileInView={{ opacity: 1, x: 0 }}
+                            
+                            viewport={{ once: true, amount: "some" }}
+                            
+                            transition={{
+                                type: "tween",
+                                ease: "easeOut",
+                                duration: 0.6,
+                                delay: index * 0.05,
+                            }}
+                            className={cn("relative h-13.75 w-full max-w-155", step.marginLeftClass)}
                         >
-
-                            {/* Arrow background */}
-
-                            <div
-                                className="
-                                    absolute
-                                    right-0
-                                    top-0
-                                    h-13.5
-                                    rounded-r-sm
-                                    bg-[linear-gradient(270deg,#FA8A00_0%,#FFAD03_52%,#FFC243_100%)]
-                                "
+                            <img 
+                                src={step.bgImage} 
+                                alt={step.title} 
+                                className="absolute inset-0 h-full w-full object-contain object-left" 
                             />
 
-
-                            {/* Left flame shape placeholder */}
-
-                            <div
-                                className="
-                                    absolute
-                                    left-0
-                                    top-2
-                                    h-10
-                                    w-24
-                                    bg-avatar-border
-                                "
-                            />
-
-
-                            {/* Text */}
-
-                            <div
-                                className="
-                                    relative
-                                    z-10
-                                    flex
-                                    h-full
-                                    items-center
-                                    justify-center
-                                    px-50
-                                "
-                            >
-
-                                <span className="whitespace-nowrap font-poppins text-[30px] font-medium italic leading-8 text-[#210535]">
+                            <div className={cn("relative z-10 flex h-full items-center justify-start pl-[32%]")}>
+                                <span className="whitespace-nowrap font-poppins text-[24px] font-medium italic leading-5.75 text-[#210535]">
                                     {step.title}
                                 </span>
-
-
-                                {step.icon && (
-                                    <span className="ml-4">
-                                        {step.icon}
-                                    </span>
-                                )}
-
                             </div>
-
-                        </div>
-
+                        </motion.div>
                     ))}
-
                 </div>
 
             </div>
@@ -151,14 +103,5 @@ function HowItWorks({
     )
 }
 
-
-
-export {
-    HowItWorks,
-}
-
-
-export type {
-    HowItWorksProps,
-    HowItWorksStep,
-}
+export { HowItWorks }
+export type { HowItWorksProps, HowItWorksStep }

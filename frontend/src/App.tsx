@@ -1,7 +1,7 @@
-import { HomePage } from "./pages/HomePage/HomePage"
+import SoloArena from "./pages/SoloArena/SoloArena";
 
 function App() {
-  return <HomePage/>
+  return <SoloArena />;
 }
 
-export default App
+export default App;
