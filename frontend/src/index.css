@@ -243,3 +243,16 @@
 }
 
 
+@keyframes roadMove {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-112px);
+    }
+}
+
+.animate-road {
+    animation: roadMove 1s linear infinite;
+}
