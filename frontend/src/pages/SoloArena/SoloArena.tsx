@@ -84,40 +84,23 @@ export default function SoloArena() {
     const [countdown, setCountdown] = useState<number | string | null>(3);
 
     const inputRef = useRef<HTMLInputElement>(null);
-
-    // Khusus untuk menentukan posisi scroll setelah countdown
     const paragraphAnchorRef = useRef<HTMLDivElement>(null);
 
     const startTimeRef = useRef<number | null>(null);
     const wpmRef = useRef(0);
     const animationRef = useRef<number | null>(null);
 
-    // COUNTDOWN + AUTO SCROLL
+    // Paksa posisi scroll tetap di atas (0,0) saat komponen pertama kali dirender/reload
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    // COUNTDOWN
     useEffect(() => {
         if (countdown === null) {
             startTimeRef.current = performance.now();
-
-            const paragraphAnchor =
-                paragraphAnchorRef.current;
-
-            if (paragraphAnchor) {
-                const anchorRect =
-                    paragraphAnchor.getBoundingClientRect();
-                
-                // Menghitung posisi agar container paragraf berada di 1/4 bagian atas viewport
-                const targetY =
-                    anchorRect.top +
-                    window.scrollY -
-                    window.innerHeight / 4;
-
-                window.scrollTo({
-                    top: Math.max(0, targetY),
-                    behavior: "smooth",
-                });
-            }
-
-            inputRef.current?.focus();
-
+            // Mencegah browser melakukan auto-scroll saat input difokuskan
+            inputRef.current?.focus({ preventScroll: true });
             return;
         }
 
