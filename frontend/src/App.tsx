@@ -1,7 +1,10 @@
-import SoloArena from "./pages/SoloArena/SoloArena";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "@/routes/AppRoutes";
 
-function App() {
-  return <SoloArena />;
+export default function App() {
+    return (
+        <BrowserRouter>
+            <AppRoutes />
+        </BrowserRouter>
+    );
 }
-
-export default App;
