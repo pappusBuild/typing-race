@@ -1,8 +1,13 @@
-import postgres from 'postgres'
+import "dotenv/config";
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-// Pastikan file .env nanti sudah ada variabel DATABASE_URL
-const connectionString = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/typing_race'
+const adapter = new PrismaPg({
+connectionString: process.env.DATABASE_URL!,
+});
 
-const sql = postgres(connectionString)
+const prisma = new PrismaClient({
+adapter,
+});
 
-export default sql
+export default prisma;

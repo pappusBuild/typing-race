@@ -4,5 +4,9 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+model Text {
+  text_id Int @id @default(autoincrement())
+  title String 
 }
