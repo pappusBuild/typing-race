@@ -8,5 +8,5 @@ datasource db {
 
 model Text {
   text_id Int @id @default(autoincrement())
-  title String 
+  content String 
 }
