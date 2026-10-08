@@ -23,7 +23,7 @@ return {
 },
 );
 
-// Cukup daftarkan sekali di sini
+// Cukup daftarkan sekali di siniz
 fastify.register(textRoutes);
 
 const start = async () => {
