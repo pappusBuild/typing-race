@@ -1,8 +1,8 @@
 import { FastifyInstance,} from "fastify";
-import { getTexts } from "../lib/text.controller.js";
+import { getRandomText } from "../controllers/text.controller.js";
 
 export const textRoutes = (fastify: FastifyInstance) => {
-fastify.get("/texts", async () => {
-    return await getTexts();
+fastify.get("/texts/random", async () => {
+    return await getRandomText();
 });
 };

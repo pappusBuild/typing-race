@@ -5,9 +5,13 @@ FastifyReply,
 } from "fastify";
 
 import { textRoutes } from "./routes/text.routes.js";
+    
+import cors from "@fastify/cors";
 
-const fastify: FastifyInstance = Fastify({
-logger: true,
+const fastify = Fastify();
+
+await fastify.register(cors, {
+    origin: "http://localhost:5173",
 });
 
 fastify.get(
@@ -19,6 +23,7 @@ return {
 },
 );
 
+// Cukup daftarkan sekali di sini
 fastify.register(textRoutes);
 
 const start = async () => {

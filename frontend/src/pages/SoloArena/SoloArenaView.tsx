@@ -1,12 +1,13 @@
 // component React untuk menampilkan tampilan permainan Solo Arena
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Loader2 } from "lucide-react";
 import { Logo } from "@/components/ui/logo/logo";
 import type { Racer } from "./useSoloGame";
 
 interface SoloArenaViewProps {
     paragraph: string;
+    isLoadingText: boolean;
     input: string;
     isFinished: boolean;
     isExpired: boolean;
@@ -31,6 +32,7 @@ interface SoloArenaViewProps {
 
 export function SoloArenaView({
     paragraph,
+    isLoadingText,
     input,
     isFinished,
     isExpired,
@@ -48,6 +50,18 @@ export function SoloArenaView({
     onMainClick,
 }: SoloArenaViewProps) {
     const racerSlots = ["18%", "38%", "58%", "78%"];
+
+    // Tampilkan indikator loading jika teks dari backend belum selesai diambil
+    if (isLoadingText) {
+        return (
+            <main className="relative flex min-h-screen items-center justify-center bg-[#210535] text-white select-none">
+                <div className="flex flex-col items-center gap-3">
+                    <Loader2 className="h-10 w-10 animate-spin text-cyan-400" />
+                    <p className="font-mono text-lg text-cyan-200">Memuat tantangan balap...</p>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main 

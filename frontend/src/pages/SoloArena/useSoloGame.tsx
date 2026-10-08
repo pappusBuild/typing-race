@@ -1,8 +1,5 @@
-//hook react untuk mengelola logika permainan Solo Arena
+// hook react untuk mengelola logika permainan Solo Arena
 import { useEffect, useRef, useState, useCallback } from "react";
-
-const PARAGRAPH =
-    "Every morning brings a new chance to move forward, learn something useful, and become better than yesterday. Small steps may seem unimportant at first, but consistent effort can create meaningful progress when you keep going with patience and confidence.";
 
 export type Racer = {
     id: number;
@@ -35,7 +32,8 @@ interface UseSoloGameProps {
 }
 
 export function useSoloGame({ motorImages }: UseSoloGameProps) {
-    const [paragraph] = useState(() => PARAGRAPH);
+    const [paragraph, setParagraph] = useState<string>("");
+    const [isLoadingText, setIsLoadingText] = useState<boolean>(true);
     const [input, setInput] = useState("");
     const [isFinished, setIsFinished] = useState(false);
     const [isExpired, setIsExpired] = useState(false);
@@ -51,6 +49,7 @@ export function useSoloGame({ motorImages }: UseSoloGameProps) {
     );
 
     const [sparkles, setSparkles] = useState<SparkleEffect[]>([]);
+    // Set awal countdown langsung ke 3 supaya useEffect countdown langsung aktif
     const [countdown, setCountdown] = useState<number | string | null>(3);
     const [isIdleBackingOff, setIsIdleBackingOff] = useState(false);
     
@@ -64,6 +63,22 @@ export function useSoloGame({ motorImages }: UseSoloGameProps) {
     const animationRef = useRef<number | null>(null);
     const lastActivityTimeRef = useRef<number>(0);
     const countdownFinishedTimeRef = useRef<number>(0);
+
+    // Fetch teks dari backend Fastify saat komponen dimuat / setelah reload
+    useEffect(() => {
+        fetch("http://localhost:3000/texts/random")
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("Data dari backend:", data);
+                setParagraph(data.content);
+                setIsLoadingText(false);
+                setCountdown(3); // Mulai countdown setelah teks berhasil di-fetch
+            })
+            .catch((err) => {
+                console.error("Gagal mengambil teks dari backend:", err);
+                setIsLoadingText(false);
+            });
+    }, []);
 
     useEffect(() => {
         if ('scrollRestoration' in window.history) {
@@ -101,23 +116,36 @@ export function useSoloGame({ motorImages }: UseSoloGameProps) {
         return () => window.removeEventListener("keydown", handleGlobalKeyDown);
     }, [handleGlobalKeyDown]);
 
+// Logika pengurang countdown (3 -> 2 -> 1 -> GO! -> null)
     useEffect(() => {
-        if (countdown === null) {
+        if (isLoadingText || countdown === null) return;
+
+        if (countdown === "GO!") {
+            const timer = window.setTimeout(() => {
+                setCountdown(null);
+            }, 1000);
+            return () => window.clearTimeout(timer);
+        }
+
+        const timer = window.setTimeout(() => {
+            if (countdown === 3) setCountdown(2);
+            else if (countdown === 2) setCountdown(1);
+            else if (countdown === 1) setCountdown("GO!");
+        }, 1000);
+
+        return () => window.clearTimeout(timer);
+    }, [countdown, isLoadingText]);
+
+    // Efek ketika countdown selesai (berubah jadi null)
+    useEffect(() => {
+        if (countdown === null && !isLoadingText) {
             inputRef.current?.focus({ preventScroll: true });
             smoothScrollBy(128, 500);
             const now = performance.now();
             lastActivityTimeRef.current = now;
             countdownFinishedTimeRef.current = now;
-            return;
         }
-        const timer = window.setTimeout(() => {
-            if (countdown === 3) setCountdown(2);
-            else if (countdown === 2) setCountdown(1);
-            else if (countdown === 1) setCountdown("GO!");
-            else if (countdown === "GO!") setCountdown(null);
-        }, 1000);
-        return () => window.clearTimeout(timer);
-    }, [countdown]);
+    }, [countdown, isLoadingText]);
 
     const triggerSparkle = (currentProg: number) => {
         const id = Date.now();
@@ -131,15 +159,16 @@ export function useSoloGame({ motorImages }: UseSoloGameProps) {
 
     const hasTypo =
         input.length > 0 &&
-        input[input.length - 1] !==
-            paragraph[input.length - 1];
+        paragraph.length > 0 &&
+        input[input.length - 1] !== paragraph[input.length - 1];
 
-    const isNearEnd = input.length >= paragraph.length - 3;
-    const showFinishLine = isFinished || isNearEnd;
+    // Perbaikan: Pastikan paragraf sudah ada isinya agar garis finish tidak muncul duluan
+    const isNearEnd = paragraph.length > 0 && input.length >= paragraph.length - 3;
+    const showFinishLine = !isLoadingText && (isFinished || isNearEnd);
     const hasStartedTypingCorrectly = input.length > 0;
 
     const updateProgressAndInput = useCallback((newInput: string, isTypoError: boolean = false) => {
-        if (isFinished || isExpired || countdown !== null) return;
+        if (isFinished || isExpired || countdown !== null || !paragraph) return;
         
         const now = performance.now();
         const timeDiff = now - lastInputTimeRef.current;
@@ -195,7 +224,7 @@ export function useSoloGame({ motorImages }: UseSoloGameProps) {
     }, [countdown, isExpired, isFinished, paragraph]);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (isFinished || isExpired || countdown !== null) return;
+        if (isFinished || isExpired || countdown !== null || !paragraph) return;
         if (event.key === "Backspace" || event.key === "Delete") {
             event.preventDefault();
             return;
@@ -222,7 +251,7 @@ export function useSoloGame({ motorImages }: UseSoloGameProps) {
     };
 
     const handleChange = (value: string) => {
-        if (isFinished || isExpired || countdown !== null) return;
+        if (isFinished || isExpired || countdown !== null || !paragraph) return;
         const previousLength = input.length;
         if (value.length !== previousLength + 1) return;
 
@@ -262,7 +291,7 @@ export function useSoloGame({ motorImages }: UseSoloGameProps) {
                 }
             } else {
                 const timeSinceLastActivity = currentTime - lastActivityTimeRef.current;
-                if (timeSinceLastActivity > 20000) {
+                if (timeSinceLastActivity > 5000) {
                     setIsExpired(true);
                     return;
                 }
@@ -276,7 +305,7 @@ export function useSoloGame({ motorImages }: UseSoloGameProps) {
             const smoothingFactor = 0.08;
             currentProgressRef.current += diff * smoothingFactor;
 
-            const isNearLast25Chars = input.length >= paragraph.length - 25;
+            const isNearLast25Chars = paragraph.length > 0 && input.length >= paragraph.length - 25;
 
             setRacers((currentRacers) => {
                 return currentRacers.map((racer) => {
@@ -354,6 +383,7 @@ export function useSoloGame({ motorImages }: UseSoloGameProps) {
 
     return {
         paragraph,
+        isLoadingText,
         input,
         isFinished,
         isExpired,

@@ -1,28 +1,31 @@
-import { PrismaClient } from '@prisma/client'
-import { Pool } from 'pg'
-import { PrismaPg} from '@prisma/adapter-pg'
-import texts from '../data/texts.json'
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import fs from "fs";
+import path from "path";
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-})
+const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL!,
+});
 
-const adapter = new PrismaPg(pool)
-
-const prisma = new PrismaClient({ adapter })
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
-    await prisma.text.createMany({
-    data: texts,
-    })
+    const filePath = path.join(process.cwd(), "data/texts.json");
 
-    console.log(`Berhasil memasukkan ${texts.length} paragraf.`)
+    const file = fs.readFileSync(filePath, "utf-8");
+    const texts = JSON.parse(file);
+
+    await prisma.text.deleteMany();
+
+    await prisma.text.createMany({
+    data: texts.map((text: { content: string }) => ({
+        content: text.content,
+    })),
+    });
+
+    console.log(`Berhasil memasukkan ${texts.length} teks.`);
 }
 
 main()
-    .catch((error) => {
-    console.error(error)
-    })
-    .finally(async () => {
-    await prisma.$disconnect()
-    })
+    .catch(console.error)
+    .finally(() => prisma.$disconnect());
