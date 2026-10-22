@@ -3,7 +3,8 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Sparkles, Loader2 } from "lucide-react";
 import { Logo } from "@/components/ui/logo/logo";
-import type { Racer } from "./useSoloGame";
+import type { Racer } from "./soloGame.types";
+import {useEffect} from "react";
 
 interface SoloArenaViewProps {
     paragraph: string;
@@ -49,6 +50,22 @@ export function SoloArenaView({
     onChange,
     onMainClick,
 }: SoloArenaViewProps) {
+useEffect(() => {
+    if (!isExpired) return;
+
+    const handleEnter = (e: KeyboardEvent) => {
+        if (e.key === "Enter") {
+            window.location.reload();
+        }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+
+    return () => {
+        window.removeEventListener("keydown", handleEnter);
+    };
+}, [isExpired]);
+
     const racerSlots = ["18%", "38%", "58%", "78%"];
 
     // Tampilkan indikator loading jika teks dari backend belum selesai diambil
@@ -168,7 +185,7 @@ export function SoloArenaView({
                                 !racer.isPlayer && racer.id === 4 && "opacity-85"
                             )}
                             style={{
-                                left: `${racer.isPlayer ? Math.max(6, Math.min(racer.progress, 90)) : racer.progress}%`,
+                                left: `${racer.isPlayer ? Math.max(6, Math.min(racer.progress, 130)) : racer.progress}%`,
                                 top: racerSlots[index],
                                 transform: "translate(-50%, -50%)",
                             }}
